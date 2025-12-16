@@ -1,0 +1,176 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2025-12-15 19:19:16.876603",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "sales_order",
+  "customer",
+  "column_break_p0fej",
+  "buyer",
+  "seller",
+  "section_break_lvfod",
+  "seller_user",
+  "seller_warehouse",
+  "status",
+  "column_break_uvity",
+  "delivery_note",
+  "sales_invoice",
+  "section_break_mzwo3",
+  "items",
+  "section_break_5iof6",
+  "total_qty",
+  "total_amount",
+  "column_break_zpcg7",
+  "remarks",
+  "naming_series"
+ ],
+ "fields": [
+  {
+   "fieldname": "sales_order",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Sales Order",
+   "options": "Sales Order",
+   "reqd": 1
+  },
+  {
+   "fetch_if_empty": 1,
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
+  },
+  {
+   "fetch_from": "sales_order.custom_marketplace_buyer",
+   "fieldname": "buyer",
+   "fieldtype": "Link",
+   "label": "Buyer",
+   "options": "Buyer"
+  },
+  {
+   "fieldname": "seller",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Seller",
+   "options": "Seller",
+   "reqd": 1
+  },
+  {
+   "fieldname": "seller_user",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Seller User",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_p0fej",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "seller_warehouse",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Seller Warehouse",
+   "options": "Warehouse",
+   "reqd": 1
+  },
+  {
+   "default": "Open",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nOpen\nDelivered\nInvoiced\nCancelled"
+  },
+  {
+   "fieldname": "delivery_note",
+   "fieldtype": "Link",
+   "label": "Delivery Note",
+   "options": "Delivery Note"
+  },
+  {
+   "fieldname": "sales_invoice",
+   "fieldtype": "Link",
+   "label": "Sales Invoice",
+   "options": "Sales Invoice"
+  },
+  {
+   "fieldname": "section_break_mzwo3",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "total_qty",
+   "fieldtype": "Float",
+   "label": "Total Quantity"
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "label": "Total Amount"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "SELL-ORD-"
+  },
+  {
+   "fieldname": "section_break_lvfod",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_uvity",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_zpcg7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Seller Order Item"
+  },
+  {
+   "fieldname": "section_break_5iof6",
+   "fieldtype": "Section Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-12-16 12:22:17.063715",
+ "modified_by": "Administrator",
+ "module": "Posawesome",
+ "name": "Seller Order",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

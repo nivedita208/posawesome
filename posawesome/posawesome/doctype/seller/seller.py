@@ -10,8 +10,15 @@ class Seller(Document):
 		self.validate_unique_supplier()
 
 	def validate_unique_supplier(self):
-		if not self.supplier:
-			return
+		mandatory_fields = [
+			("supplier","Supplier"),
+			("portal_user", "Portal User"),
+            ("default_warehouse", "Default Warehouse"),
+		]
+  
+		for fieldname, label in mandatory_fields:
+			if not self.get(fieldname):
+				frappe.throw(f"{label} is mandatory")
 
 		existing_seller = frappe.db.exists(
 		"Seller",

@@ -5,6 +5,11 @@ app_description = "B2B customizations for ERPNext."
 app_email = "b2b@example.com"
 app_license = "MIT"
 
+doc_events = {
+    "Sales Order": {
+        "validate": "posawesome.custom_code.sales_order_v1.is_marketplace_order"
+        }
+}
 # Includes in <head>
 # ------------------
 
