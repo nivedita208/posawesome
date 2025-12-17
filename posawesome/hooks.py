@@ -7,7 +7,8 @@ app_license = "MIT"
 
 doc_events = {
     "Sales Order": {
-        "validate": "posawesome.custom_code.sales_order_v1.is_marketplace_order"
+        "validate": "posawesome.custom_code.sales_order_v1.is_marketplace_order",
+        "on_submit": "posawesome.custom_code.sales_order_v1.create_seller_orders"
         }
 }
 # Includes in <head>
