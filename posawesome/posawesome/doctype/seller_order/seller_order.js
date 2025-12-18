@@ -4,6 +4,36 @@
 frappe.ui.form.on('Seller Order', {
 	refresh: function(frm) {
 
+		if (frm.doc.status === "Open" && !frm.doc.delivery_note) {
+
+			let deliver_btn = frm.add_custom_button(__('Deliver'), function () {
+				frappe.confirm(
+					"Are you sure you want to create & submit Delivery Note?",
+					function () {
+						frappe.call({
+							method: "posawesome.posawesome.doctype.seller_order.seller_order.make_dn_from_seller_order",
+							args: {
+								seller_order_name: frm.doc.name
+							},
+							callback: function (r) {
+								if (!r.exc) {
+									frappe.msgprint("Delivery Note created successfully");
+									frm.reload_doc();
+								}
+							}
+						});
+					}
+				);
+			}, __('Create'));
+
+			let Invoice_btn = frm.add_custom_button(__('Invoice'), function () {
+				frappe.msgprint("Invoice button clicked");
+			}, __('Create'));
+
+			deliver_btn.addClass('btn-primary');
+			Invoice_btn.addClass('btn-primary');
+
+		}
 	}
 });
 
