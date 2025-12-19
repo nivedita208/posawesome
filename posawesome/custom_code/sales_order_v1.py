@@ -79,6 +79,7 @@ def create_seller_orders(doc, method):
                 "item": so_item.item_code,
                 "qty": so_item.qty,
                 "rate": so_item.rate,
+                "uom":so_item.uom,
                 # "amount": so_item.amount,
                 "so_item_ref": so_item.name
             })

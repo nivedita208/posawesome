@@ -24,16 +24,18 @@ frappe.ui.form.on('Seller Order', {
 						});
 					}
 				);
-			}, __('Create'));
+			}, );
+		}
 
+		if (frm.doc.status === "Delivered" && !frm.doc.sales_invoice){
 			let Invoice_btn = frm.add_custom_button(__('Invoice'), function () {
 				frappe.msgprint("Invoice button clicked");
-			}, __('Create'));
-
+			},);
+		}
 			deliver_btn.addClass('btn-primary');
 			Invoice_btn.addClass('btn-primary');
 
-		}
+		
 	}
 });
 

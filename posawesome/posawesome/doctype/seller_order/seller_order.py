@@ -19,7 +19,7 @@ class SellerOrder(Document):
 		self.total_amount = total_amount
 
 
-###############deluver button code #########################
+###############deliver button code #########################
 
 import frappe
 
@@ -34,23 +34,26 @@ def make_dn_from_seller_order(seller_order_name):
 	if not seller_order.sales_order:
 		frappe.throw("Sales Order not linked with Seller Order")
 
-	# Permission check (temporarily commented safely)
-	# if (
-	#     frappe.session.user != seller_order.seller_user
-	#     and not frappe.has_role("System Manager")
-	# ):
-	#     frappe.throw("You are not allowed to create Delivery Note")
+	# Permission check 
+	if (
+	    frappe.session.user != seller_order.seller_user
+	    and "System Manager" not in frappe.get_roles()
+	):
+	    frappe.throw("You are not allowed to create Delivery Note")
 
 	# Create Delivery Note
 	dn = frappe.new_doc("Delivery Note")
 	dn.customer = seller_order.customer
 	dn.sales_order = seller_order.sales_order
 	dn.set_warehouse = seller_order.seller_warehouse
-	dn.custom_seller_order = seller_order.name
+	dn.custom_seller_order_ = seller_order.name
 	dn.company = sales_order.company    
 
 	# Add items only from Seller Order
 	for item in seller_order.items:
+		if not item.uom:
+			frappe.throw("UOM is mandatory")
+     
 		dn.append("items", {
 			"item_code": item.item,
 			"qty": item.qty,
@@ -73,6 +76,3 @@ def make_dn_from_seller_order(seller_order_name):
 
 	return dn.name
 
-# done work : delivery note creating 
-# pending : fetching uom its mandatory in delivery note 
-# delivery note date and posting date changing i mean we are directly submitting the doc so?
