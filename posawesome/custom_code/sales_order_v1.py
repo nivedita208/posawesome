@@ -14,29 +14,33 @@ def is_marketplace_order(doc, method):
     # Validate each item
     for row in doc.items:
 
-        # Fetch Item master
+        # Fetch Item 
         item = frappe.get_doc("Item", row.item_code)
 
         # Seller must be set in Item
         if not item.custom_seller:
             frappe.throw(
-                f"Seller not set in Item master for {row.item_code}"
+                f"Seller not set in Item  for {row.item_code}"
             )
 
         # Set seller on SO item
         row.custom_seller = item.custom_seller
 
-        # Fetch Seller
-        seller = frappe.get_doc("Seller", item.custom_seller)
+        seller_name = item.custom_seller  # Seller document name
 
-        # Seller must have default warehouse
-        if not seller.default_warehouse:
+        warehouse = frappe.db.get_value(
+            "Seller",
+            seller_name,
+            "default_warehouse"
+        )
+
+        if not warehouse:
             frappe.throw(
-                f"Default Warehouse missing for Seller {seller.name}"
+                f"Default Warehouse missing for Seller {seller_name}"
             )
 
-        # Set warehouse on SO item
-        row.custom_seller_warehouse = seller.default_warehouse
+        row.custom_seller_warehouse = warehouse
+        
         
 ###################################
 
@@ -108,4 +112,5 @@ done work:
 3.amended form again submit then seller order creaton blocked
 4.msg is showing on submitting and i mean after creation of seller order
  
+pending : when i add evrything AND UNCHECKING THE MARKETPLACE ORDER ITS ALLOWING CREATION OF SELLER ORDER
 '''

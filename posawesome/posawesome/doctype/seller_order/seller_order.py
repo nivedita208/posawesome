@@ -27,8 +27,14 @@ def make_dn_from_seller_order(seller_order_name):
 
 	# Get Seller Order
 	seller_order = frappe.get_doc("Seller Order", seller_order_name)
+ 
 	# Get linked Sales Order
 	sales_order = frappe.get_doc("Sales Order", seller_order.sales_order)
+	if seller_order.delivery_note:
+		frappe.throw("Delivery Note already created")
+	if seller_order.status != "Open":
+		frappe.throw("Delivery Note can only be created when status is Open")
+ 
 	# Validate Sales Order link
 	if not seller_order.sales_order:
 		frappe.throw("Sales Order not linked with Seller Order")
