@@ -29,7 +29,23 @@ frappe.ui.form.on('Seller Order', {
 
 		if (frm.doc.status === "Delivered" && !frm.doc.sales_invoice){
 			let Invoice_btn = frm.add_custom_button(__('Invoice'), function () {
-				frappe.msgprint("Invoice button clicked");
+				frappe.confirm(
+					'Are you sure you want to create and submit sales invoice?',
+					function(){
+						frappe.call({
+							method:"posawesome.posawesome.doctype.seller_order.seller_order.make_si_from_seller_order",
+							args:{
+								seller_order_name:frm.doc.name
+							},
+							callback (){
+								frappe.msgprint("Sales Invoice created successfully");
+								frm.reload_doc();
+							}
+
+							
+						})
+					}
+				);
 			},);
 		}
 			deliver_btn.addClass('btn-primary');
@@ -38,6 +54,8 @@ frappe.ui.form.on('Seller Order', {
 		
 	}
 });
+
+
 
 frappe.ui.form.on('Seller Order Item', {
 

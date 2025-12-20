@@ -3,6 +3,7 @@
 
 import frappe
 from frappe.model.document import Document
+from erpnext.stock.doctype.delivery_note.delivery_note import make_sales_invoice
 
 class SellerOrder(Document):
 	def validate(self):
@@ -19,9 +20,7 @@ class SellerOrder(Document):
 		self.total_amount = total_amount
 
 
-###############deliver button code #########################
-
-import frappe
+###############deliver button code ########################
 
 @frappe.whitelist()
 def make_dn_from_seller_order(seller_order_name):
@@ -75,4 +74,49 @@ def make_dn_from_seller_order(seller_order_name):
 	seller_order.save(ignore_permissions=True)
 
 	return dn.name
+
+#############################################
+
+@frappe.whitelist()
+def make_si_from_seller_order(seller_order_name):
+
+	# Get Seller Order
+	seller_order = frappe.get_doc("Seller Order", seller_order_name)
+
+	# Validations
+	if not seller_order.delivery_note:
+		frappe.throw("Delivery Note not created yet")
+
+	if seller_order.sales_invoice:
+		frappe.throw("Sales Invoice already created")
+
+	# Permission check
+	# if (
+	# 	frappe.session.user != seller_order.seller_user
+	# 	and "System Manager" not in frappe.get_roles()
+	# ):
+	# 	frappe.throw("You are not allowed to create Sales Invoice")
+
+	# Get Delivery Note
+	dn = frappe.get_doc("Delivery Note", seller_order.delivery_note)
+
+	if dn.docstatus != 1:
+		frappe.throw("Delivery Note must be submitted")
+
+	# Create Sales Invoice from DN (STANDARD ERPNext METHOD)
+	si = make_sales_invoice(dn.name)
+
+	
+	si.custom_seller_order = seller_order.name
+
+	# Insert & Submit SI
+	si.insert(ignore_permissions=True)
+	si.submit()
+
+	# Update Seller Order
+	seller_order.sales_invoice = si.name
+	seller_order.status = "Invoiced"
+	seller_order.save(ignore_permissions=True)
+
+	return si.name
 
