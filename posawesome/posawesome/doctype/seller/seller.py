@@ -30,5 +30,6 @@ class Seller(Document):
 
 		if existing_seller:
 			frappe.throw(
-				f"Seller already exists for Supplier {self.supplier}"
+				f"Seller already exists for Supplier {self.supplier} <br>"
+ 				f"Existing Seller ID: <b>{existing_seller}</b>"				
 			)

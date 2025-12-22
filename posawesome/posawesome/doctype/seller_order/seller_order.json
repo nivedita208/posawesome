@@ -27,7 +27,8 @@
   "total_amount",
   "column_break_zpcg7",
   "remarks",
-  "naming_series"
+  "naming_series",
+  "amended_from"
  ],
  "fields": [
   {
@@ -145,11 +146,22 @@
   {
    "fieldname": "section_break_5iof6",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Seller Order",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2025-12-16 12:22:17.063715",
+ "modified": "2025-12-22 22:49:48.822169",
  "modified_by": "Administrator",
  "module": "Posawesome",
  "name": "Seller Order",

@@ -17,7 +17,11 @@ frappe.ui.form.on('Seller Order', {
 							},
 							callback: function (r) {
 								if (!r.exc) {
-									frappe.msgprint("Delivery Note created successfully");
+									console.log(r.message);
+									frappe.msgprint(
+										"Delivery Note created successfully:<b>" + r.message + "</b>"
+									);
+									
 									frm.reload_doc();
 								}
 							}
@@ -37,8 +41,11 @@ frappe.ui.form.on('Seller Order', {
 							args:{
 								seller_order_name:frm.doc.name
 							},
-							callback (){
-								frappe.msgprint("Sales Invoice created successfully");
+							callback:function (r){
+								if(!r.exc){
+									frappe.msgprint("Sales Invoice created successfully:<b>" + r.message + "</b> ");
+	
+								}
 								frm.reload_doc();
 							}
 
