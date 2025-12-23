@@ -75,8 +75,8 @@ def make_dn_from_seller_order(seller_order_name):
 	dn.submit()
 
 	# Update Seller Order
-	seller_order.delivery_note = dn.name
-	seller_order.status = "Delivered"
+	seller_order.db_set("delivery_note", dn.name)
+	seller_order.db_set("status", "Delivered")
 	seller_order.save(ignore_permissions=True)
 
 	return dn.name
@@ -120,8 +120,8 @@ def make_si_from_seller_order(seller_order_name):
 	si.submit()
 
 	# Update Seller Order
-	seller_order.sales_invoice = si.name
-	seller_order.status = "Invoiced"
+	seller_order.db_set("sales_invoice",si.name)
+	seller_order.db_set("status","Invoiced")
 	seller_order.save(ignore_permissions=True)
 
 	return si.name

@@ -89,6 +89,7 @@ def create_seller_orders(doc, method):
             })
 
         seller_order.insert(ignore_permissions=True)
+        seller_order.submit()
         created_seller_orders.append(seller_order.name)
 
         for so_item in items:
@@ -105,12 +106,3 @@ def create_seller_orders(doc, method):
         )
 
 
-'''
-done work:
-1.on submitting sales order seller orders getting created
-2.based on item,seller if item a has 1b eller and item 2 has 2b seller then 2 seller order get created
-3.amended form again submit then seller order creaton blocked
-4.msg is showing on submitting and i mean after creation of seller order
- 
-pending : when i add evrything AND UNCHECKING THE MARKETPLACE ORDER ITS ALLOWING CREATION OF SELLER ORDER
-'''

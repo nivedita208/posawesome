@@ -16,6 +16,6 @@ class Buyer(Document):
     
 	
       
-#in b2bsite added seller order doctype pending:adding seller order item childtable adding seller order in sales order item child table     
+ 
      
      
