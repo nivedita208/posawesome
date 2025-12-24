@@ -53,7 +53,8 @@ def create_seller_orders(doc, method):
         return
     
     so = frappe.get_doc("Sales Order", doc.name)
-
+    
+    # for grouping items seller wise
     seller_items_map = {}
     created_seller_orders = []
 
@@ -63,12 +64,14 @@ def create_seller_orders(doc, method):
 
         seller_items_map.setdefault(item.custom_seller, []).append(item)
 
+    #loop for gruoped items based on sellers
     for custom_seller, items in seller_items_map.items():
         
         
         
         seller_doc = frappe.get_doc("Seller", custom_seller)
         
+        # seller order doc creation
         seller_order = frappe.new_doc("Seller Order")
 
         seller_order.seller = custom_seller
@@ -92,6 +95,7 @@ def create_seller_orders(doc, method):
         seller_order.submit()
         created_seller_orders.append(seller_order.name)
 
+        #linking back seller_order IDs in sales order item childtable
         for so_item in items:
             frappe.db.set_value(
                 "Sales Order Item",
